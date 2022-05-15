@@ -82,10 +82,12 @@ exports.signIn=(req,res)=>{
 
 // User Update Profile API
 exports.updateProfile = (req,res) => {
+    console.log(req.body);
 	User.findOne({
 		email:req.body.email
 	})
 		.exec((err,user) => {
+            console.log("check",user);
 			if(err){
 				res.status(500).send({message:err});
 				return;
@@ -94,6 +96,7 @@ exports.updateProfile = (req,res) => {
 				return res.status(404).send({message:"User not found"});
 			}
 			if(req.body.firstname){
+                console.log("check11");
 				user.firstName = req.body.firstname;
 			}
 			if(req.body.lastname){
@@ -154,6 +157,7 @@ exports.viewPrice=(req,res)=>{
     User.findOne({
         _id:mongoose.Types.ObjectId(req.params.id)
     }).then(resp => {
+        console.log(resp);
         resp.password=undefined;
         res.status(200).send(resp);
     })
@@ -227,9 +231,9 @@ exports.cancelBooking=(req,res) => {
 
 //Booking on BookingID
 exports.BookingonId=(req,res)=>{
-    Booking.findOne({bookingID:req.params.bookingId})
+    Booking.find({bookingID:req.params.bookingId})
 .then((response) =>{
-    res.status(500).send(response)
+    res.status(200).send(response)
 })
 .catch( err => {
     console.log(err);
