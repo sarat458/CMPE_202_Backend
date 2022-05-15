@@ -11,4 +11,5 @@ router.post('/createBooking',controller.userBooking);
 router.put('/cancelBooking',controller.cancelBooking);
 router.get('/bookingid/:bookingId',controller.BookingonId);
 router.post("/updatebooking",controller.updateBooking);
+router.put("/updateRewardPoints/:userId/:rewards",controller.descreaseRewardPoints);
 module.exports = router;
