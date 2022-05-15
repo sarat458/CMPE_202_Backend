@@ -192,7 +192,8 @@ exports.userBooking=(req,res)=>{
             if (err){
                 res.status(500).send({message:err});
             }
-            User.findOneAndUpdate({ _id:mongoose.Types.ObjectId(req.body.userId)},{ $inc: { rewardPoints:req.body.amountPaid}})            
+            console.log("check-back",req.body.roomPrice*req.body.roomCount);
+            User.findOneAndUpdate({ _id:mongoose.Types.ObjectId(req.body.userId)},{ $inc: { rewardPoints:req.body.roomPrice*req.body.roomCount}})            
             .then(response=>{
                 res.status(200).send("Successfully booked")
             })
@@ -269,4 +270,17 @@ exports.updateBooking = async (req,res) => {
         }
     }
     res.send("Success");
+}
+
+exports.descreaseRewardPoints  = async (req,res) => {
+    const {userId,rewards} = req.params;
+    console.log(rewards);
+    User.findOneAndUpdate({ _id:mongoose.Types.ObjectId(userId)},{ $inc: { rewardPoints:-rewards}}) 
+    .then(resp => {
+        res.send("rewards decreased");
+    })           
+    .catch(err => {
+        res.status(500).send("Internal error");
+    })
+
 }
