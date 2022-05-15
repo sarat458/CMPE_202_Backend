@@ -32,7 +32,7 @@ exports.searchHotels =  (req,res) => {
 exports.roomsAvailability=async (req,res)=>{
     //console.log(req.params.hotelId,req.params.checkInDate,req.params.checkOutDate)
     const {hotelId,checkInDate,checkOutDate} = req.params;
-    let roomTypes = await Room.find({hotel_id:hotelId});
+    let roomTypes = await Room.find({hotelId:hotelId});
     let hotel = await Hotel.find({_id:hotelId});
     let singleCount=0,doubleCount=0,suiteCount=0;
     let checkIn = new Date(checkInDate);
@@ -93,7 +93,7 @@ function calculatePrice(price,checkIn,checkOut) {
     const checkOutMonth=(date2.getMonth())+1;
     //Thanks giving Christmas pricing
     if((date1.getDate()+1>19 && checkInMonth==11)||checkInMonth==12){
-        price+=(price*0.20);
+        price+=(price*0.30);
     }
     //Summer Season pricing
     else if((checkInMonth==4||checkInMonth==5)||(checkOutMonth==4||checkOutMonth==5)){
